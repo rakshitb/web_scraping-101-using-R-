@@ -1,0 +1,96 @@
+# Specifying the url to download data from
+url='http://www3.ha.org.hk/fnc/Radiology.aspx?lang=ENG'
+
+# Reading html code from website
+page=read_html(url)
+
+# Using html headers and class to download the specific data
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000002_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000002A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000002_Header > div.categoryPrice')%>%html_text()
+df11=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df11)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000003_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000003A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000003_Header > div.categoryPrice')%>%html_text()
+df12=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df12)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000004_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000004A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000004_Header > div.categoryPrice')%>%html_text()
+df13=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df13)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000005_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000005A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000005_Header > div.categoryPrice')%>%html_text()
+df14=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df14)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000006_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000006A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000006_Header > div.categoryPrice')%>%html_text()
+df15=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df15)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000007_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000007A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000007_Header > div.categoryPrice')%>%html_text()
+df16=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df16)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000008_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000008A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000008_Header > div.categoryPrice')%>%html_text()
+df17=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df17)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000009_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000009A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000009_Header > div.categoryPrice')%>%html_text()
+df18=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df18)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000010_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000010A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000010_Header > div.categoryPrice')%>%html_text()
+df19=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df19)=col_headings
+
+type=page%>%html_nodes('#RC00000001_Header > div.categoryDescription0')%>%html_text()
+subtype=page%>%html_nodes('#RC00000011_Header > div.categoryDescription1')%>%html_text
+services=page%>%html_nodes("#RC00000011A_ItemList > li")%>%html_text()
+price=page%>%html_nodes('#RC00000011_Header > div.categoryPrice')%>%html_text()
+df20=data.frame(type,subtype,services,price)
+col_headings=c('Radiology_type','Radiology_subtype','services','price')
+names(df20)=col_headings
+
+
+## Combining all radiology procedures and sub-proceudres in one data frame
+
+df_radiology=do.call("rbind",list(df11,df12,df13,df14,df15,df16,df17,df18,df19,df20))
+df_radiology=as_data_frame(df_radiology)
+
+## Writing the dataframe into an excel file
+write.xlsx2(df_radiology,"medical_procedure.xlsx",sheetName = 'Radiology',col.names = T,append = T)

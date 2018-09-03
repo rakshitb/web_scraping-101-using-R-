@@ -1,0 +1,36 @@
+## Scraping specific information from 2nd level weblinks using library Rvest in R
+
+## Loading required libraries
+
+library(rvest)
+library(htmlTreeParse)
+library(xmlparsedata)
+
+## Read the main url
+
+url <- "https://rarediseases.info.nih.gov/diseases/diseases-by-category/5/congenital-and-genetic-diseases"
+pg <- read_html(url)
+
+## Function defined to extract the specific information from 2nd level links
+
+getcast <- function(url){
+  page <- read_html(url)
+  nodes <- html_nodes(page, '#diseaseSynonyms .complete')
+  onames <- html_text(nodes)
+  return(onames)
+}
+
+## Calling the 2nd level links from the main webpage and converting the into text format
+
+pg_html <- html_nodes(pg, '.body-container a')
+disease_title=html_text(pg_html)
+
+## Calling the 2nd level links
+
+sub_urls <- html_attr(pg_html, 'href')
+m_urls <- paste0('https://rarediseases.info.nih.gov', sub_urls)
+
+## Applying the above-defined function to extract the required information from all the 2nd level weblinks
+
+disease_names=lapply(m_urls, getcast)
+
